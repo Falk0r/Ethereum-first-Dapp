@@ -1,12 +1,12 @@
 <template>
 <!-- navbar -->
-<nav class="bg-white shadow-md h-min w-full">
-    <div class="flex flex-wrap items-center justify-between px-4 py-6">
-        <button v-if="!accounts.account" @click="connectWallet" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+<nav class="h-min w-full bg-transparent">
+    <div class="flex flex-wrap items-center justify-between px-4 py-3">
+        <button v-if="!accounts.account" @click="connectWallet" class="bg-cyan-500 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-full mb-4">
             Connect Metamask
         </button>
-        <p v-if="accounts.account">{{accounts.account}}</p>
-        <button @click="getAccount" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <p v-if="accounts.account" class="text-black">{{accounts.account}}</p>
+        <button @click="getAccount" class="bg-cyan-500 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-full mb-4">
             Check Account
         </button>
     </div>
