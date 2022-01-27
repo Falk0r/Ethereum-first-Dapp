@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { provide, ref, reactive } from 'vue'
+import { provide, reactive } from 'vue'
 import { ethers } from 'ethers'
 
 import { contractABI, contractAddress } from '../utils/constants'
@@ -68,10 +68,10 @@ const sendTransaction = async () => {
         // get the data from the form
         const { addressTo, amount, keyword, message } = formStructure;
         const transactionContract = getEthereumContract();
-        const parsedAmount = ethers.utils.parseEther(amount);
+        const parsedAmount = ethers.utils.parseEther(amount.toString());
 
         await ethereum.request({ 
-            method: 'eth_sendTransactions',
+            method: 'eth_sendTransaction',
             params: [{
                 from: address.account,
                 to: addressTo,
@@ -91,6 +91,11 @@ const sendTransaction = async () => {
         const transactionCount = await transactionContract.getTransactionCount();
         console.log(`Transaction Count - ${transactionCount}`);
 
+        formStructure.addressTo = '';
+        formStructure.amount = '';
+        formStructure.keyword = '';
+        formStructure.message = '';
+
     } catch (error) {
         console.log(error);
         throw new Error("No etherneum found");
@@ -98,7 +103,7 @@ const sendTransaction = async () => {
 }
 
 const checkAccount = () => {
-    console.log('CurrentAccount', address.account);
+    console.log('CurrentAccount :', address.account);
 }
 
 const connectWallet = async () => {
@@ -140,7 +145,6 @@ export default {
         provide('accounts', accounts);
         provide('formData', formData);
         provide('loading', loading);
-        provide('testProvide', 'testProvideValue')
         provide('checkIfWalletIsConnected', checkIfWalletIsConnected)
         provide('connectWallet', connectWallet)
         provide('sendTokens', sendTokens)
@@ -148,7 +152,3 @@ export default {
     },
 }
 </script>
-
-<style>
-
-</style>

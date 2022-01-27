@@ -8,7 +8,7 @@
                 </div>
                 <div class="flex flex-col">
                     <label for="amount" class="text-white">Amount (ETH)</label>
-                    <input type="number" id="amount" class="border border-gray-500 p-2 w-full text-black" v-model="formData.amount" />
+                    <input type="number" step="0.0001" id="amount" class="border border-gray-500 p-2 w-full text-black" v-model="formData.amount" />
                 </div>
                 <div class="flex flex-col">
                     <label for="keyword" class="text-white">Keyword</label>

@@ -13,6 +13,3 @@ import TransactionContext from './contexts/TransactionContext.vue'
         <main-form />
     </transaction-context>
 </template>
-
-<style>
-</style>
