@@ -1,5 +1,7 @@
 <template>
-    <slot></slot>
+    <div class="bg-slate-800 text-white h-screen flex flex-col justify-between items-center">
+        <slot></slot>
+    </div>
 </template>
 
 <script>
@@ -20,6 +22,8 @@ const getEthereumContract = () => {
         signer,
         transactionContract
     });
+
+    return transactionContract;
 }
 
 const checkIfWalletIsConnected = async ()=> {
@@ -31,69 +35,117 @@ const checkIfWalletIsConnected = async ()=> {
         console.log(accounts);
     
         if (accounts.length) {
-            // ref.account = accounts[0];
-            eth.account = accounts[0];
+            address.account = accounts[0];
             // getAllTransactions();
         } else {
             alert('No accounts found');
         }
-        console.log('CurrentAccount', eth.account);
+        console.log('CurrentAccount', address.account);
         
     } catch (error) {
-        // throw new Error("No etherneum found");
-        console.log(error);
+        throw new Error("No etherneum found");
     }
+}
 
+const sendTokens = () => {
+    console.log('sendTokens');
+    const { addressTo, amount, keyword, message } = formStructure;
+    console.log({
+        addressTo,
+        amount,
+        keyword,
+        message
+    });
+    if (!addressTo || !amount || !keyword || !message) return;
+    sendTransaction();
+}
+
+const sendTransaction = async () => {
+    console.log('sendTransaction');
+    try {
+        if(!ethereum) return alert('Please install Metamask');
+
+        // get the data from the form
+        const { addressTo, amount, keyword, message } = formStructure;
+        const transactionContract = getEthereumContract();
+        const parsedAmount = ethers.utils.parseEther(amount);
+
+        await ethereum.request({ 
+            method: 'eth_sendTransactions',
+            params: [{
+                from: address.account,
+                to: addressTo,
+                gas: '0x5208', // 21000 gwei
+                value: parsedAmount._hex, 
+            }]
+        });
+
+        const transactionHash = await transactionContract.addToBlockchain(addressTo, parsedAmount, message, keyword);
+
+        loading.transactionHash = true;
+        console.log(`Loading - ${transactionHash.hash}`);
+        await transactionHash.wait();
+        loading.transactionHash = false;
+        console.log(`Success - ${transactionHash.hash}`);
+
+        const transactionCount = await transactionContract.getTransactionCount();
+        console.log(`Transaction Count - ${transactionCount}`);
+
+    } catch (error) {
+        console.log(error);
+        throw new Error("No etherneum found");
+    }
 }
 
 const checkAccount = () => {
-    console.log('CurrentAccount', eth.account);
+    console.log('CurrentAccount', address.account);
 }
 
 const connectWallet = async () => {
     try {
-        console.log('connectWallet');
         if(!ethereum) return alert('Please install Metamask');
 
         const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
         console.log(accounts);
 
-        // setCurrentAccount(accounts[0]);
-        // ref.account = accounts[0];
-        eth.account = accounts[0];
+        address.account = accounts[0];
 
     } catch (error) {
-        
+        throw new Error("No ethereum object");
     }
 }
 
-const eth = reactive({
+// Datastructure
+const address = reactive({
     account: null
+});
+
+const formStructure = reactive({
+    addressTo: null,
+    amount: 0,
+    keyword: null,
+    message: null
+});
+
+const loading = reactive({
+    transactionHash: false
 });
 
 
 
 export default {
     setup(){
-        // const accounts = ref(null);
-        const accounts = eth;
+        const accounts = address;
+        const formData = formStructure;
         provide('accounts', accounts);
+        provide('formData', formData);
+        provide('loading', loading);
         provide('testProvide', 'testProvideValue')
         provide('checkIfWalletIsConnected', checkIfWalletIsConnected)
         provide('connectWallet', connectWallet)
+        provide('sendTokens', sendTokens)
         provide('checkAccount', checkAccount)
     },
-    data(){
-        return {
-            accounts : []
-        }
-    },
-    methods: {
-        setCurrentAccount(accounts) {
-            console.log('accounts',this.accounts);
-            this.accounts = accounts;
-        }
-    }
 }
 </script>
 

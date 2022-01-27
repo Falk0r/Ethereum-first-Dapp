@@ -10,9 +10,7 @@ import TransactionContext from './contexts/TransactionContext.vue'
 <template>
     <transaction-context>
         <navbar />
-        <div class="bg-slate-800 text-white h-screen flex justify-center items-center">
-            <main-form />
-        </div>
+        <main-form />
     </transaction-context>
 </template>
 

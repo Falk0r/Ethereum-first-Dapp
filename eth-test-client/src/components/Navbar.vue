@@ -1,8 +1,8 @@
 <template>
 <!-- navbar -->
-<nav class="bg-white shadow-md">
-    <div class="container flex flex-wrap items-center justify-between px-4 py-6">
-        <button @click="connectWallet" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+<nav class="bg-white shadow-md h-min w-full">
+    <div class="flex flex-wrap items-center justify-between px-4 py-6">
+        <button v-if="!accounts.account" @click="connectWallet" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Connect Metamask
         </button>
         <p v-if="accounts.account">{{accounts.account}}</p>
