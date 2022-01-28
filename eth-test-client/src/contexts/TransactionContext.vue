@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-slate-800 text-white h-screen flex flex-col justify-between items-center">
+    <div class="bg-main text-white h-screen flex flex-col justify-between items-center">
         <slot></slot>
     </div>
 </template>
@@ -127,7 +127,7 @@ const address = reactive({
 
 const formStructure = reactive({
     addressTo: null,
-    amount: 0,
+    amount: null,
     keyword: null,
     message: null
 });
@@ -152,3 +152,9 @@ export default {
     },
 }
 </script>
+<style>
+ .bg-main{
+     background-color:#1e293b;
+     background-image: radial-gradient(at 100% 100%, hsla(167,96%,20%,1) 0, transparent 46%);
+ }
+</style>
