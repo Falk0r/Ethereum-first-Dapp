@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-main text-white h-screen flex flex-col justify-between items-center">
+    <div class="bg-main text-white min-h-screen flex flex-col justify-between items-center">
         <slot></slot>
     </div>
 </template>
@@ -35,12 +35,12 @@ const checkIfWalletIsConnected = async ()=> {
         console.log(accounts);
     
         if (accounts.length) {
-            address.account = accounts[0];
+            address.currentAccount = accounts[0];
             // getAllTransactions();
         } else {
             alert('No accounts found');
         }
-        console.log('CurrentAccount', address.account);
+        console.log('CurrentAccount', address.currentAccount);
         
     } catch (error) {
         throw new Error("No etherneum found");
@@ -73,7 +73,7 @@ const sendTransaction = async () => {
         await ethereum.request({ 
             method: 'eth_sendTransaction',
             params: [{
-                from: address.account,
+                from: address.currentAccount,
                 to: addressTo,
                 gas: '0x5208', // 21000 gwei
                 value: parsedAmount._hex, 
@@ -103,7 +103,7 @@ const sendTransaction = async () => {
 }
 
 const checkAccount = () => {
-    console.log('CurrentAccount :', address.account);
+    console.log('CurrentAccount :', address.currentAccount);
 }
 
 const connectWallet = async () => {
@@ -113,7 +113,7 @@ const connectWallet = async () => {
         const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
         console.log(accounts);
 
-        address.account = accounts[0];
+        address.currentAccount = accounts[0];
 
     } catch (error) {
         throw new Error("No ethereum object");
@@ -122,7 +122,7 @@ const connectWallet = async () => {
 
 // Datastructure
 const address = reactive({
-    account: null
+    currentAccount: null
 });
 
 const formStructure = reactive({

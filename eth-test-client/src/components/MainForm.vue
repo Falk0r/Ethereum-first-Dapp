@@ -1,5 +1,5 @@
 <template>
-    <div class="h-full w-full flex justify-center items-center">
+    <div class="h-full w-full flex justify-center items-center min-h-[70vh]">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
         <form action="" class="relative w-full md:w-1/2 xl:w-1/3 bg-slate-700 p-10 rounded-xl mx-4">
             <div class="absolute -translate-x-1/2 left-1/2 -top-12 bg-slate-700 border-2 h-16 w-16 flex justify-center items-center rounded-full">
@@ -13,7 +13,7 @@
                     <input type="number" step="0.0001" id="amount" class="border bg-slate-600 border-slate-600 p-2 w-full text-white rounded" v-model="formData.amount" placeholder="Amount (ETH)" />
                 </div>
                 <div class="flex flex-col mt-4">
-                    <input type="text" id="keyword" class="border bg-slate-600 border-slate-600 p-2 w-full text-white rounded" v-model="formData.keyword" placeholder="Keyword" />
+                    <input type="text" id="keyword" class="border bg-slate-600 border-slate-600 p-2 w-full text-white rounded" v-model="formData.keyword" placeholder="Keyword (GIF)" />
                 </div>
                 <div class="flex flex-col mt-4">
                     <input type="text" id="message" class="border bg-slate-600 border-slate-600 p-2 w-full text-white rounded" v-model="formData.message" placeholder="Enter Message"/>
