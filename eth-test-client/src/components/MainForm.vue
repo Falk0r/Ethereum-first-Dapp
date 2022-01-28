@@ -1,7 +1,7 @@
 <template>
     <div class="h-full w-full flex justify-center items-center">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
-        <form action="" class="relative w-full md:w-1/2 bg-slate-700 p-10 rounded-xl mx-4">
+        <form action="" class="relative w-full md:w-1/2 xl:w-1/3 bg-slate-700 p-10 rounded-xl mx-4">
             <div class="absolute -translate-x-1/2 left-1/2 -top-12 bg-slate-700 border-2 h-16 w-16 flex justify-center items-center rounded-full">
                 <i class="text-5xl fab fa-ethereum"></i>
             </div>
