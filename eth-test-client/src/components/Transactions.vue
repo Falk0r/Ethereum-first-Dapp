@@ -5,7 +5,7 @@
             <h3 v-else class="text-white text-3xl text-center my-2">Connect your account to see the latest transactions</h3>
             <div v-if="accounts.currentAccount && transactions.transactions.length" class="flex flex-wrap justify-center items-center">
                 <transaction-card 
-                    v-for="transaction in transactions.transactions.reverse()" :transaction="transaction" :key="transaction.id">
+                    v-for="transaction in transactions.transactions" :transaction="transaction" :key="transaction.id">
                 </transaction-card>
             </div>
         </div>
