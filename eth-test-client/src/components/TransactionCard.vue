@@ -54,6 +54,7 @@ export default {
         },
         async getGif(){
             try {
+                console.log('getGif');
                 const response = await fetch(`https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=${this.transaction.keyword.split(" ").join("")}&limit=1`);
                 const data = await response.json();
                 console.log(data);
