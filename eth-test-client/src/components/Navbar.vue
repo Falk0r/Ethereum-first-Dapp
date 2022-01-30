@@ -15,16 +15,14 @@
 </template>
 
 <script>
-import { inject, ref } from 'vue'
+import { inject } from 'vue'
 export default {
     setup() {
-        const metamask = inject('testProvide');
         const checkIfWalletIsConnected = inject('checkIfWalletIsConnected');
         const connectWallet = inject('connectWallet');
         const checkAccount = inject('checkAccount');
         const accounts = inject('accounts');
         return {
-            metamask,
             checkIfWalletIsConnected,
             connectWallet,
             checkAccount,
@@ -35,10 +33,6 @@ export default {
         this.checkIfWalletIsConnected();
     },
     methods: {
-        getMetamask() {
-            console.log(this.metamask);
-            this.logg();
-        },
         getAccount() {
             console.log(this.accounts.account);
         },
