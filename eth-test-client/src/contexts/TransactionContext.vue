@@ -43,10 +43,10 @@ const checkIfWalletIsConnected = async ()=> {
 
 const handleAccountsChanged = accounts => {
     if (accounts.length === 0) {
-        return address.account = null;
+        return address.currentAccount = null;
     }
     if (accounts[0] !== address.account) {
-        return address.account = accounts[0];
+        return address.currentAccount = accounts[0];
     }
 }
 
