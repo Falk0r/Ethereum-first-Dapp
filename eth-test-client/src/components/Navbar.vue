@@ -24,11 +24,13 @@ export default {
         const connectWallet = inject('connectWallet');
         const checkAccount = inject('checkAccount');
         const accounts = inject('accounts');
+        const transactions = inject('transactions');
         return {
             checkIfWalletIsConnected,
             connectWallet,
             checkAccount,
-            accounts
+            accounts,
+            transactions
         }
     },
     mounted() {
@@ -37,6 +39,8 @@ export default {
     methods: {
         getAccount() {
             console.log(this.accounts.currentAccount);
+            console.log(this.transactions.transactions);
+
         },
         shortenAddress(address) {
             return shortenAddress(address);
