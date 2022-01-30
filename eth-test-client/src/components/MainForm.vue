@@ -20,7 +20,8 @@
                 </div>
                 <hr class="mt-4 ">
                 <div class="flex flex-col mt-4">
-                    <button type="submit" class="bg-cyan-500 hover:bg-cyan-700 text-white font-bold py-2 px-4 mt-4 rounded" @click.prevent="sendTokens">Send Now</button>
+                    <button v-if="!loading.transactionHash" type="submit" class="bg-cyan-500 hover:bg-cyan-700 text-white font-bold py-2 px-4 mt-4 rounded" @click.prevent="sendTokens">Send Now</button>
+                    <img v-else src="/Spinner-1s-350px.png" alt="loading" class="h-12 w-12 m-auto">
                 </div>
             </div>
         </form>
@@ -34,9 +35,11 @@ export default {
     setup() {
         const formData = inject('formData');
         const sendTokens = inject('sendTokens');
+        const loading = inject('loading');
         return {
             formData,
             sendTokens,
+            loading,
         };
     },
 }

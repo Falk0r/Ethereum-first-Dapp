@@ -26,6 +26,33 @@ const getEthereumContract = () => {
     return transactionContract;
 }
 
+const getAllTransactions = async () => {
+    try {
+        if(!ethereum) return alert('Please install Metamask');
+        const transactionContract = getEthereumContract();
+
+        const availableTransactions = await transactionContract.getAllTransactions();
+
+        const structuredTransactions = await availableTransactions.map((transaction) => ({
+            addressTo: transaction.receiver,
+            addressFrom: transaction.sender,
+            timestamp: new Date(transaction.timestamp.toNumber() * 1000).toLocaleString(),
+            message: transaction.message,
+            keyword: transaction.keyword,
+            amount: parseInt(transaction.amount._hex,) / (10 ** 18),
+        }))
+
+        console.log({
+            availableTransactions,
+            structuredTransactions
+        });
+
+        return transactions.transactions = structuredTransactions;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 const checkIfWalletIsConnected = async ()=> {
     try {
         if(!ethereum) return alert('Please install Metamask');
@@ -46,6 +73,7 @@ const handleAccountsChanged = accounts => {
         return address.currentAccount = null;
     }
     if (accounts[0] !== address.account) {
+        getAllTransactions();
         return address.currentAccount = accounts[0];
     }
 }
@@ -93,6 +121,7 @@ const sendTransaction = async () => {
 
         const transactionCount = await transactionContract.getTransactionCount();
         console.log(`Transaction Count - ${transactionCount}`);
+        getAllTransactions();
 
         formStructure.addressTo = '';
         formStructure.amount = '';
@@ -139,7 +168,9 @@ const loading = reactive({
     transactionHash: false
 });
 
-
+const transactions = reactive({
+    transactions: []
+});
 
 export default {
     setup(){
@@ -148,6 +179,7 @@ export default {
         provide('accounts', accounts);
         provide('formData', formData);
         provide('loading', loading);
+        provide('transactions', transactions);
         provide('checkIfWalletIsConnected', checkIfWalletIsConnected)
         provide('connectWallet', connectWallet)
         provide('sendTokens', sendTokens)
