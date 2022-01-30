@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-main text-white h-screen flex flex-col justify-between items-center">
+    <div class="bg-main text-white min-h-screen flex flex-col justify-between items-center">
         <slot></slot>
     </div>
 </template>
@@ -76,7 +76,7 @@ const sendTransaction = async () => {
         await ethereum.request({ 
             method: 'eth_sendTransaction',
             params: [{
-                from: address.account,
+                from: address.currentAccount,
                 to: addressTo,
                 gas: '0x5208', // 21000 gwei
                 value: parsedAmount._hex, 
@@ -106,7 +106,7 @@ const sendTransaction = async () => {
 }
 
 const checkAccount = () => {
-    console.log('CurrentAccount :', address.account);
+    console.log('CurrentAccount :', address.currentAccount);
 }
 
 const connectWallet = async () => {
@@ -114,6 +114,7 @@ const connectWallet = async () => {
         if(!ethereum) return alert('Please install Metamask');
 
         const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+
         handleAccountsChanged(accounts);
 
     } catch (error) {
@@ -124,7 +125,7 @@ const connectWallet = async () => {
 
 // Datastructure
 const address = reactive({
-    account: null
+    currentAccount: null
 });
 
 const formStructure = reactive({

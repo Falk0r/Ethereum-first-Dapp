@@ -5,11 +5,13 @@ import HelloWorld from './components/HelloWorld.vue'
 import MainForm from './components/MainForm.vue'
 import Navbar from './components/Navbar.vue'
 import TransactionContext from './contexts/TransactionContext.vue'
+import Transactions from './components/Transactions.vue'
 </script>
 
 <template>
     <transaction-context>
         <navbar />
         <main-form />
+        <transactions />
     </transaction-context>
 </template>
