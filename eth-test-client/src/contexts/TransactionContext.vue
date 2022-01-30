@@ -17,12 +17,6 @@ const getEthereumContract = () => {
     const signer = provider.getSigner();
     const transactionContract = new ethers.Contract(contractAddress, contractABI, signer);
 
-    console.log({
-        provider,
-        signer,
-        transactionContract
-    });
-
     return transactionContract;
 }
 
@@ -42,12 +36,7 @@ const getAllTransactions = async () => {
             amount: parseInt(transaction.amount._hex,) / (10 ** 18),
         }))
 
-        console.log({
-            availableTransactions,
-            structuredTransactions
-        });
-
-        return transactions.transactions = structuredTransactions;
+        return transactions.transactions = structuredTransactions.reverse();
     } catch (error) {
         console.log(error);
     }
@@ -81,18 +70,12 @@ const handleAccountsChanged = accounts => {
 const sendTokens = () => {
     console.log('sendTokens');
     const { addressTo, amount, keyword, message } = formStructure;
-    console.log({
-        addressTo,
-        amount,
-        keyword,
-        message
-    });
+
     if (!addressTo || !amount || !keyword || !message) return;
     sendTransaction();
 }
 
 const sendTransaction = async () => {
-    console.log('sendTransaction');
     try {
         if(!ethereum) return alert('Please install Metamask');
 
@@ -121,21 +104,12 @@ const sendTransaction = async () => {
 
         const transactionCount = await transactionContract.getTransactionCount();
         console.log(`Transaction Count - ${transactionCount}`);
-        getAllTransactions();
 
-        formStructure.addressTo = '';
-        formStructure.amount = '';
-        formStructure.keyword = '';
-        formStructure.message = '';
+        window.location.reload();
 
     } catch (error) {
-        console.log(error);
         throw new Error("No etherneum found");
     }
-}
-
-const checkAccount = () => {
-    console.log('CurrentAccount :', address.currentAccount);
 }
 
 const connectWallet = async () => {
@@ -147,7 +121,6 @@ const connectWallet = async () => {
         handleAccountsChanged(accounts);
 
     } catch (error) {
-        console.log({ error });
         throw new Error("No ethereum object");
     }
 }
@@ -183,7 +156,6 @@ export default {
         provide('checkIfWalletIsConnected', checkIfWalletIsConnected)
         provide('connectWallet', connectWallet)
         provide('sendTokens', sendTokens)
-        provide('checkAccount', checkAccount)
     },
 }
 </script>
