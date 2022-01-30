@@ -32,18 +32,21 @@ const checkIfWalletIsConnected = async ()=> {
     
         const accounts = await ethereum.request({ method: 'eth_accounts' });
 
-        console.log(accounts);
-    
-        if (accounts.length) {
-            address.currentAccount = accounts[0];
-            // getAllTransactions();
-        } else {
-            alert('No accounts found');
-        }
-        console.log('CurrentAccount', address.currentAccount);
+        handleAccountsChanged(accounts);
+        
+        ethereum.on('accountsChanged', handleAccountsChanged);
         
     } catch (error) {
         throw new Error("No etherneum found");
+    }
+}
+
+const handleAccountsChanged = accounts => {
+    if (accounts.length === 0) {
+        return address.account = null;
+    }
+    if (accounts[0] !== address.account) {
+        return address.account = accounts[0];
     }
 }
 
@@ -111,11 +114,11 @@ const connectWallet = async () => {
         if(!ethereum) return alert('Please install Metamask');
 
         const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-        console.log(accounts);
 
-        address.currentAccount = accounts[0];
+        handleAccountsChanged(accounts);
 
     } catch (error) {
+        console.log({ error });
         throw new Error("No ethereum object");
     }
 }

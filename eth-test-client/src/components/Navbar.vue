@@ -35,10 +35,6 @@ export default {
         this.checkIfWalletIsConnected();
     },
     methods: {
-        getMetamask() {
-            console.log(this.metamask);
-            this.logg();
-        },
         getAccount() {
             console.log(this.accounts.currentAccount);
         },
