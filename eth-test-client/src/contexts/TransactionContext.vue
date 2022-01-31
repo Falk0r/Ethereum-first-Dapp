@@ -38,7 +38,7 @@ const getAllTransactions = async () => {
 
         return transactions.transactions = structuredTransactions.reverse();
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 }
 
@@ -68,10 +68,11 @@ const handleAccountsChanged = accounts => {
 }
 
 const sendTokens = () => {
-    console.log('sendTokens');
     const { addressTo, amount, keyword, message } = formStructure;
 
-    if (!addressTo || !amount || !keyword || !message) return;
+    if (!address.currentAccount) return alert('Please connect to Metamask');
+
+    if (!addressTo || !amount || !keyword || !message) return alert('Please fill all fields');
     sendTransaction();
 }
 
@@ -108,6 +109,7 @@ const sendTransaction = async () => {
         window.location.reload();
 
     } catch (error) {
+        alert(error.message);
         throw new Error("No etherneum found");
     }
 }

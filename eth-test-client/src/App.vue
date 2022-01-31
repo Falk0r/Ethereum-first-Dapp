@@ -6,6 +6,7 @@ import MainForm from './components/MainForm.vue'
 import Navbar from './components/Navbar.vue'
 import TransactionContext from './contexts/TransactionContext.vue'
 import Transactions from './components/Transactions.vue'
+import MyLink from './components/MyLink.vue'
 </script>
 
 <template>
@@ -13,5 +14,6 @@ import Transactions from './components/Transactions.vue'
         <navbar />
         <main-form />
         <transactions />
+        <my-link />
     </transaction-context>
 </template>
