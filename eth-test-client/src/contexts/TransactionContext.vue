@@ -57,6 +57,21 @@ const checkIfWalletIsConnected = async ()=> {
     }
 }
 
+const checkChainConnected = async () => {
+    try {
+        if(!ethereum) return alert('Please install Metamask');
+    
+        const chainId = await ethereum.chainId;
+
+        console.log(chainId);
+
+        return chainId;
+        
+    } catch (error) {
+        throw new Error("No etherneum found");
+    }
+}
+
 const handleAccountsChanged = accounts => {
     if (accounts.length === 0) {
         return address.currentAccount = null;
@@ -127,6 +142,35 @@ const connectWallet = async () => {
     }
 }
 
+const addChain = async (chain) => {
+    try {
+        console.log(chain);
+        if(!ethereum) return alert('Please install Metamask');
+
+        const chains = await ethereum.request({ method: 'wallet_addEthereumChain', params : [chain] });
+
+        console.log({chains});
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const switchChain = async (chain) => {
+    try {
+        console.log(chain);
+        if(!ethereum) return alert('Please install Metamask');
+
+        const chains = await ethereum.request({ method: 'wallet_switchEthereumChain', params : [{chainId: chain.chainId}] });
+
+    } catch (switchError) {
+        console.log(switchError);
+        if (switchError.code == 4902) {
+            addChain(chain);
+        }
+    }
+}
+
 // Datastructure
 const address = reactive({
     currentAccount: null
@@ -158,6 +202,9 @@ export default {
         provide('checkIfWalletIsConnected', checkIfWalletIsConnected)
         provide('connectWallet', connectWallet)
         provide('sendTokens', sendTokens)
+        provide('addChain', addChain)
+        provide('switchChain', switchChain)
+        provide('checkChainConnected', checkChainConnected)
     },
 }
 </script>
