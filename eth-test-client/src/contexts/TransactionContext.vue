@@ -7,6 +7,7 @@
 <script>
 import { provide, reactive } from 'vue'
 import { ethers } from 'ethers'
+import { chains } from '../utils/networks'
 
 import { contractABI, contractAddress } from '../utils/constants'
 
@@ -59,13 +60,13 @@ const checkIfWalletIsConnected = async ()=> {
 
 const checkChainConnected = async () => {
     try {
-        if(!ethereum) return alert('Please install Metamask');
-    
         const chainId = await ethereum.chainId;
 
-        console.log(chainId);
+        const chain = chains.find(chain => chain.chainId.toUpperCase() == chainId.toUpperCase());
 
-        return chainId;
+        console.log(chain);
+
+        return chain;
         
     } catch (error) {
         throw new Error("No etherneum found");
@@ -161,7 +162,7 @@ const switchChain = async (chain) => {
         console.log(chain);
         if(!ethereum) return alert('Please install Metamask');
 
-        const chains = await ethereum.request({ method: 'wallet_switchEthereumChain', params : [{chainId: chain.chainId}] });
+        await ethereum.request({ method: 'wallet_switchEthereumChain', params : [{chainId: chain.chainId}] });
 
     } catch (switchError) {
         console.log(switchError);

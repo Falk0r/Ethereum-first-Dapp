@@ -11,11 +11,11 @@
         </button>
     </div>
     <div class="flex flex-wrap items-center px-4 py-3">
-        <select @change="selectChain" class="bg-cyan-500 text-white py-2 px-4 rounded-full mr-4 cursor-pointer" name="networks" id="networks">
-            <option value="1">Ethereum</option>
-            <option value="2">Avalanche</option>
-            <option value="3">Binance Smart Chain</option>
-            <option value="4">Polygon</option>
+        <select v-if="chain" @change="selectChain" :value="chain?.chainId" class="bg-cyan-500 text-white py-2 px-4 rounded-full mr-4 cursor-pointer" name="networks" id="networks">
+            <option value="0x3">Ethereum</option>
+            <option value="0xA869">Avalanche</option>
+            <option value="0x61">Binance Smart Chain</option>
+            <option value="0x13881">Polygon</option>
         </select>
     </div>
 </nav>
@@ -24,7 +24,7 @@
 <script>
 import { inject } from 'vue'
 import { shortenAddress } from '../utils/shortenAddress'
-import { AVALANCHE_TESTNET_PARAMS, ETHEREUM_TESTNET_PARAMS, BINANCE_SMART_CHAIN_TESTNET_PARAMS, POLYGON_TESTNET_PARAMS } from '../utils/networks'
+import { chains } from '../utils/networks'
 
 export default {
     setup() {
@@ -45,9 +45,14 @@ export default {
             checkChainConnected,
         }
     },
+    data() {
+        return {
+            chain: null,
+        }
+    },
     mounted() {
         this.checkIfWalletIsConnected();
-        this.checkChainConnected();
+        this.selectChainConnected();
     },
     methods: {
         shortenAddress(address) {
@@ -61,27 +66,14 @@ export default {
         },
         selectChain(e) {
             console.log(e.target.value);
-            let chain;
-            switch (e.target.value) {
-                case '1':
-                    chain = ETHEREUM_TESTNET_PARAMS;
-                    break;
-            
-                case '2':
-                    chain = AVALANCHE_TESTNET_PARAMS;
-                    break;
+            const chain = chains.find(chain => chain.chainId == e.target.value);
 
-                case '3':
-                    chain = BINANCE_SMART_CHAIN_TESTNET_PARAMS;
-                    break;
-
-                case '4':
-                    chain = POLYGON_TESTNET_PARAMS;
-                    break;
-                default:
-                    break;
-            }
             return this.switchChain(chain);
+        },
+        selectChainConnected(){
+            this.checkChainConnected().then(chain => {
+                this.chain = chain;
+            });
         }
     }
 }

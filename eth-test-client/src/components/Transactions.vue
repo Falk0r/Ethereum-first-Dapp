@@ -8,6 +8,9 @@
                     v-for="transaction in transactions.transactions" :transaction="transaction" :key="transaction.id">
                 </transaction-card>
             </div>
+            <div v-else>
+                <h3 class="text-white text-3xl text-center my-2">No transactions yet</h3>
+            </div>
         </div>
 
     </div>
