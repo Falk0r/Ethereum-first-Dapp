@@ -1,6 +1,6 @@
 tasks:
-  - init: npm install
-    command: npm run dev
+  - init: npm --prefix ./eth-test-client/ install
+    command: npm run --prefix ./eth-test-client/ dev
 
 ports:
   - port: 3000
