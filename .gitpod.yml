@@ -1,7 +1,0 @@
-tasks:
-  - init: npm --prefix ./eth-test-client/ install
-    command: npm run --prefix ./eth-test-client/ dev
-
-ports:
-  - port: 3000
-    onOpen: open-preview
